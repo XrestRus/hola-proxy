@@ -1,6 +1,10 @@
-# hola-proxy
+> [!IMPORTANT]
+> This is an **unofficial fork** of a project originally developed by Vladislav Yarmak ([@Snawoot](https://github.com/Snawoot)).
+> The repository was reconstructed from publicly available sources.
+>
+> It is **not affiliated with, endorsed by, or maintained by the original author**.
 
-[![hola-proxy](https://snapcraft.io//hola-proxy/badge.svg)](https://snapcraft.io/hola-proxy)
+# hola-proxy
 
 Standalone Hola proxy client. Just run it and it'll start a plain HTTP proxy server forwarding traffic through Hola proxies of your choice.
 By default the application listens on 127.0.0.1:8080.
@@ -20,7 +24,7 @@ This alternative implementation ensures your internet connection is not shared w
 
 #### Binaries
 
-Pre-built binaries are available [here](https://github.com/Snawoot/hola-proxy/releases/latest).
+Pre-built binaries are available [here](https://github.com/snawoot-proxies-forks/hola-proxy/releases/latest).
 
 Don't forget to make file executable on Unix-like systems (Linux, MacOS, \*BSD, Android). For your convenience rename downloaded file to `hola-proxy` and run within directory where you placed it:
 
@@ -34,27 +38,6 @@ Alternatively, you may install hola-proxy from source. Run the following within 
 
 ```
 make install
-```
-
-#### Docker
-
-A docker image is available as well. Here is an example of running hola-proxy via DE as a background service:
-
-```sh
-docker run -d \
-    --security-opt no-new-privileges \
-    -p 127.0.0.1:8080:8080 \
-    --restart unless-stopped \
-    --name hola-proxy \
-    yarmak/hola-proxy -country de
-```
-
-#### Snap Store
-
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/hola-proxy)
-
-```bash
-sudo snap install hola-proxy
 ```
 
 ## Usage
@@ -158,8 +141,3 @@ zagent248.hola.org,165.22.65.3,22222,22223,22224,22225,22226,digitalocean
 | timeout | Duration | timeout for network operations (default 35s) |
 | user-agent | String | value of User-Agent header in requests. Default: User-Agent of latest stable Chrome for Windows |
 | verbosity | Number | logging verbosity (10 - debug, 20 - info, 30 - warning, 40 - error, 50 - critical) (default 20) |
-
-## See also
-
-* [Project wiki](https://github.com/Snawoot/hola-proxy/wiki)
-* [Community in Telegram](https://t.me/alternative_proxy)
