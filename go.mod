@@ -1,4 +1,4 @@
-module github.com/Snawoot/hola-proxy
+module github.com/XrestRus/hola-proxy
 
 go 1.24.4
 

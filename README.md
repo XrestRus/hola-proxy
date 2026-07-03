@@ -24,7 +24,7 @@ This alternative implementation ensures your internet connection is not shared w
 
 #### Binaries
 
-Pre-built binaries are available [here](https://github.com/snawoot-proxies-forks/hola-proxy/releases/latest).
+Pre-built binaries are available [here](https://github.com/XrestRus/hola-proxy/releases/latest).
 
 Don't forget to make file executable on Unix-like systems (Linux, MacOS, \*BSD, Android). For your convenience rename downloaded file to `hola-proxy` and run within directory where you placed it:
 
@@ -39,6 +39,68 @@ Alternatively, you may install hola-proxy from source. Run the following within 
 ```
 make install
 ```
+
+#### Docker
+
+Build the image locally:
+
+```sh
+docker build -t hola-proxy .
+```
+
+Run with a specific country (proxy listens on port 8080 inside the container):
+
+```sh
+docker run -d --name hola-proxy -p 8080:8080 hola-proxy -country de
+```
+
+Residential IP instead of datacenter:
+
+```sh
+docker run -d --name hola-proxy -p 8080:8080 hola-proxy -proxy-type lum -country us
+```
+
+**Connect from the host machine** — set `HTTP_PROXY` / `HTTPS_PROXY` or pass `-x` to curl:
+
+```sh
+export HTTP_PROXY=http://127.0.0.1:8080
+export HTTPS_PROXY=http://127.0.0.1:8080
+curl -x http://127.0.0.1:8080 https://ifconfig.me
+```
+
+**Connect from another Docker container** — put both containers on the same network and use the service name as proxy host:
+
+```sh
+docker network create proxy-net
+docker run -d --name hola-proxy --network proxy-net hola-proxy -country de
+docker run --rm --network proxy-net curlimages/curl \
+  curl -x http://hola-proxy:8080 https://ifconfig.me
+```
+
+**docker-compose example:**
+
+```yaml
+services:
+  hola-proxy:
+    image: hola-proxy:latest
+    build: .
+    command: ["-country", "de"]
+    ports:
+      - "8080:8080"
+
+  app:
+    image: curlimages/curl
+    network_mode: service:hola-proxy
+    command: curl -x http://127.0.0.1:8080 https://ifconfig.me
+```
+
+**Connect from another machine** — publish port `-p 8080:8080` and point clients to `http://<host-ip>:8080`. On a remote server, restrict access with a firewall or bind to localhost and use SSH tunneling:
+
+```sh
+ssh -L 8080:127.0.0.1:8080 user@remote-server
+```
+
+Pre-built images are published to Docker Hub on git tag push (`v*.*.*`) as `<dockerhub-username>/hola-proxy`.
 
 ## Usage
 
